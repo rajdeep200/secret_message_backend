@@ -1,0 +1,1 @@
+{"version":3,"file":"customResponse.js","sourceRoot":"","sources":["../../src/utils/customResponse.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO,OAAO,cAAc;IAK/B,YAAY,OAAgB,EAAE,IAAQ,EAAE,OAAgB;QACpD,IAAI,CAAC,OAAO,GAAG,OAAO,CAAA;QACtB,IAAI,CAAC,IAAI,GAAG,IAAI,CAAA;QAChB,IAAI,CAAC,OAAO,GAAG,OAAO,CAAA;IAC1B,CAAC;CACJ"}
