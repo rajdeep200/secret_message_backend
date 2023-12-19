@@ -35,11 +35,16 @@ export const postReq = (query: any, postgresConnection: PostgresConfig) => {
     return new Promise((resolve, reject) => {
         let client = new pg.Client(postgresConnection)
         client.connect();
-        return client.query(query, (err: any, res: any) => {
-            if (err) {
-                reject(err)
+        return client.query(query, (error: any, res: any) => {
+            if (error) {
+                reject(error)
             }
-            resolve(res.rowCount)
+            if(res?.rowCount) {
+                console.log('res =>> ', res)
+                resolve(res.rowCount)
+            }else {
+                reject(error)
+            }
             client.end()
         })
     })
