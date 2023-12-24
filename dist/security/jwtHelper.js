@@ -1,18 +1,11 @@
 import jwt from 'jsonwebtoken';
 const secretKey = process.env.JWT_SECRET_KEY;
 export const generateToken = (payload) => {
-    // console.log('payload ==>> ', payload)
-    // console.log('secretKey generateToken ==>> ', `${secretKey}`)
-    const token = jwt.sign({ payload }, secretKey, { expiresIn: "3d" });
-    return token;
+    return jwt.sign({ payload }, secretKey, { expiresIn: "3d" });
 };
 export const verifyToken = (token) => {
     try {
-        // console.log('secretKey verifyToken ==>> ', secretKey)
-        const verificationResponse = jwt.verify(token, secretKey);
-        // console.log('verificationResponse ==>> ', verificationResponse)
-        // console.log('secretKey verifyToken ==>> ', secretKey)
-        return verificationResponse;
+        return jwt.verify(token, secretKey);
     }
     catch (error) {
         console.log('error ==>> ', error);

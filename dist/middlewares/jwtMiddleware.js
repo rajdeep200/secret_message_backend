@@ -1,15 +1,22 @@
 import { verifyToken } from "../security/jwtHelper.js";
 export const authenticate = (req, res, next) => {
-    const token = req.headers.authorization.split(" ")[1];
+    let token;
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+        try {
+            token = req.headers.authorization.split(" ")[1];
+            const decoded = verifyToken(token);
+            console.log(decoded);
+            next();
+        }
+        catch (error) {
+            console.error(error);
+            res.status(401).send(error);
+            return;
+        }
+    }
     if (!token) {
-        res.sendStatus(401);
+        res.status(401).json({ error: "No Token" });
+        return;
     }
-    const decodedToken = verifyToken(token);
-    console.log('decodedToken ==>> ', decodedToken);
-    if (!decodedToken) {
-        res.sendStatus(401);
-    }
-    req.user = decodedToken;
-    next();
 };
 //# sourceMappingURL=jwtMiddleware.js.map
