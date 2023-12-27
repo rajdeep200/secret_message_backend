@@ -20,6 +20,20 @@ export class UserController {
         }
     }
 
+    static getAllUserByUsername = async (req: Request, res: Response) => {
+        try {
+            const { username }: any = req.query;
+            const query = `SELECT * FROM users WHERE username = '${username}'`
+            const response = await getReq(query, postgresDatabase)
+            const customResponse: any = new CustomResponse(true, response, "Successfully retrieved from DB")
+            res.status(200).json(customResponse)
+        } catch (error) {
+            console.log('error', error)
+            const customResponse = new CustomResponse(false, "Something went wrong")
+            res.status(500).json(customResponse)
+        }
+    }
+
     static register = async (req: Request, res: Response) => {
         const generatedUsername = generateUsername(req.body.name, 8);
         const generatedId = generateId();
@@ -51,6 +65,9 @@ export class UserController {
 
     // username => RaQqjgLyft
     // password => AZx9qazh2s
+
+    // username2 => RaJvukX6zB
+    // password2 => Mc9x3jKKdu
     static login = async (req: Request, res: Response) => {
         if(!req.body.username || !req.body.password) {
             const customResponse = new CustomResponse(false, "Bad Request")
@@ -67,7 +84,7 @@ export class UserController {
                 return res.status(401).json(customResponse);
             }
             const encryptedPassword = userResult[0].password;
-            const decryptedPasword = decryptPassword(encryptedPassword) 
+            const decryptedPasword = decryptPassword(encryptedPassword)
             if(decryptedPasword !== password) {
                 const customResponse = new CustomResponse(false, 'Invalid password');
                 return res.status(401).json(customResponse);
@@ -82,4 +99,14 @@ export class UserController {
             res.status(500).json(customResponse)
         }
     }
+
+    // static update = async (req: Request, res: Response) => {
+    //     try {
+            
+    //     } catch (error) {
+    //         console.log('error', error)
+    //         const customResponse = new CustomResponse(false, "Something went wrong")
+    //         res.status(500).json(customResponse)
+    //     }
+    // }
 }

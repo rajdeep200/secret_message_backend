@@ -7,10 +7,5 @@ export const generateToken = (payload: any): string => {
 }
 
 export const verifyToken = (token: string): any => {
-    try {
-        return jwt.verify(token, secretKey)
-    } catch (error) {
-        console.log('error ==>> ', error)
-        return null
-    }
+    return jwt.verify(token, secretKey)
 }
